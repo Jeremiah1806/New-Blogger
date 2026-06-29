@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog.blog_title }}</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        body{
+            background-size:400% 400%;
+            animation:gradient 12s ease infinite;
+        }
+
+        @keyframes gradient{
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-black via-blue-950 to-red-950 p-6 text-white pt-24">
+    <nav class="w-full fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+
+        <div class="font-bold text-xl text-blue-300">
+            Admin Panel
+        </div>
+        <div class="hidden md:flex gap-6 text-sm font-semibold">
+
+            <a href="{% url 'homepage' %}" class="text-green-200 hover:text-green-400 transition">Home</a>
+
+            <a href="{% url 'adminregistration' %}" class="text-yellow-200 hover:text-yellow-400 transition">Admins</a>
+
+            <a href="{% url 'Category' %}" class="text-purple-200 hover:text-purple-400 transition">Category</a>
+
+            <a href="{% url 'user_verification' %}" class="text-blue-200 hover:text-blue-400 transition">Users</a>
+
+            <a href="{% url 'Reports' %}" class="text-orange-200 hover:text-orange-400 transition">Reports</a>
+
+            <a href="{% url 'admin_logout' %}" class="text-red-200 hover:text-red-400 font-bold transition">
+                Logout
+            </a>
+
+        </div>
+
+        <!-- Hamburger -->
+        <button id="menuBtn" class="md:hidden text-white text-3xl">
+            ☰
+        </button>
+
+    </div>
+        <div id="mobileMenu"
+     class="hidden md:hidden bg-black/80 backdrop-blur-lg border-t border-white/10 text-white">
+
+    <a href="{% url 'homepage' %}"
+       class="block px-6 py-4 text-green-200 hover:bg-white/10 hover:text-green-400">
+        Home
+    </a>
+
+    <a href="{% url 'adminregistration' %}"
+       class="block px-6 py-4 text-yellow-200 hover:bg-white/10 hover:text-yellow-400">
+        Admins
+    </a>
+
+    <a href="{% url 'Category' %}"
+       class="block px-6 py-4 text-purple-200 hover:bg-white/10 hover:text-purple-400">
+        Category
+    </a>
+
+    <a href="{% url 'user_verification' %}"
+       class="block px-6 py-4 text-blue-200 hover:bg-white/10 hover:text-blue-400">
+        Users
+    </a>
+
+    <a href="{% url 'Reports' %}"
+       class="block px-6 py-4 text-red-200 hover:bg-red-400/20">
+        Reports
+    </a>
+
+    <a href="{% url 'admin_logout' %}"
+       class="block px-6 py-4 text-red-200 hover:bg-red-400/20">
+        Logout
+    </a>
+
+</div>
+</nav>
+<div class="w-full max-w-5xl mx-auto">
+
+    <div class="p-10 rounded-3xl
+                backdrop-blur-xl
+                bg-black/40
+                border border-blue-500/20
+                shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+
+        <h1 class="text-5xl font-black text-white text-center mb-3">
+            {{ blog.blog_title }}
+        </h1>
+
+        <p class="text-center text-blue-300/80 mb-10">
+            Full Blog Post
+        </p>
+
+        <!-- BLOG BOX -->
+        <div class="relative p-8 rounded-2xl
+                    bg-white/5
+                    border border-blue-500/20
+                    backdrop-blur-lg">
+
+            <!-- ✅ IMAGE ADDED HERE (TOP OF TEXT BOX) -->
+            {% if blog.blog_image %}
+                <img src="{{ blog.blog_image.url }}"
+                     class="w-full max-h-[450px] object-cover rounded-xl mb-6 border border-blue-500/20">
+            {% endif %}
+
+            <!-- BLOG TEXT -->
+            <div class="text-gray-300 leading-relaxed text-lg whitespace-pre-line mb-8">
+                {{ blog.blog_content|striptags }}
+            </div>
+
+            <!-- FOOTER -->
+            <div class="flex justify-between items-center flex-wrap gap-4">
+
+                <div class="text-blue-300 font-semibold">
+                    Posted by:
+                    <span class="text-white">
+                        {{ blog.user.user_name }}
+                    </span>
+                </div>
+
+                <div class="px-4 py-2 rounded-full
+                            bg-red-500/10
+                            border border-red-500/20
+                            text-red-300
+                            flex items-center gap-2">
+
+                    <span>❤️</span>
+                    <span>{{ blog.tbl_blog_like_set.count }}</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", function () {
+            mobileMenu.classList.toggle("hidden");
+        });
+    }
+});
+</script>
+</body>
+</html>

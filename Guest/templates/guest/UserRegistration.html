@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+```
+<style>
+    body{
+        background-size:400% 400%;
+        animation:gradient 12s ease infinite;
+    }
+
+    @keyframes gradient{
+        0%{background-position:0% 50%;}
+        50%{background-position:100% 50%;}
+        100%{background-position:0% 50%;}
+    }
+</style>
+```
+</head>
+
+
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-blue-950 to-red-950">
+
+
+
+<div class="w-full max-w-6xl p-10 rounded-3xl
+            backdrop-blur-xl
+            bg-black/40
+            border border-blue-500/20
+            shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+
+<h3 class="text-5xl font-black text-white text-center mb-2">
+    Create Account
+</h3>
+
+<p class="text-center text-blue-300/80 mb-8">
+    Join New Blogger and start sharing your thoughts
+</p>
+
+
+
+   <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+```
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Name
+        </label>
+
+        <input
+            type="text"
+            name="name"
+            required
+            class="w-full p-4 rounded-xl
+                   bg-black/40
+                   border border-blue-500/30
+                   text-white
+                   placeholder:text-gray-400
+                   focus:border-blue-400
+                   focus:ring-2 focus:ring-blue-500
+                   outline-none">
+    </div>
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Email
+        </label>
+
+        <input
+            type="email"
+            name="email"
+            required
+            class="w-full p-4 rounded-xl
+                   bg-black/40
+                   border border-blue-500/30
+                   text-white
+                   placeholder:text-gray-400
+                   focus:border-blue-400
+                   focus:ring-2 focus:ring-blue-500
+                   outline-none">
+    </div>
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Password
+        </label>
+
+        <input
+            type="password"
+            name="password"
+            required
+            class="w-full p-4 rounded-xl
+                   bg-black/40
+                   border border-red-500/30
+                   text-white
+                   placeholder:text-gray-400
+                   focus:border-red-400
+                   focus:ring-2 focus:ring-red-500
+                   outline-none">
+    </div>
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Contact
+        </label>
+
+        <input
+            type="text"
+            name="contact"
+            required
+            class="w-full p-4 rounded-xl
+                   bg-black/40
+                   border border-blue-500/30
+                   text-white
+                   focus:border-blue-400
+                   focus:ring-2 focus:ring-blue-500
+                   outline-none">
+    </div>
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Place
+        </label>
+
+        <input
+            type="text"
+            name="place"
+            required
+            class="w-full p-4 rounded-xl
+                   bg-black/40
+                   border border-blue-500/30
+                   text-white
+                   focus:border-blue-400
+                   focus:ring-2 focus:ring-blue-500
+                   outline-none">
+    </div>
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Date of Birth
+        </label>
+
+        <input
+            type="date"
+            name="dob"
+            required
+            class="w-full p-4 rounded-xl
+                   bg-black/40
+                   border border-red-500/30
+                   text-white
+                   focus:border-red-400
+                   focus:ring-2 focus:ring-red-500
+                   outline-none">
+    </div>
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Profile Image
+        </label>
+
+        <input
+            type="file"
+            name="photo"
+            accept="image/*"
+            required
+            class="w-full p-3 rounded-xl
+                   bg-black/40
+                   border border-blue-500/30
+                   text-gray-300">
+    </div>
+
+    <div>
+        <label class="block text-blue-200 mb-2 font-medium">
+            Gender
+        </label>
+
+        <div class="flex gap-6 mt-4 text-white">
+
+            <label class="flex items-center gap-2">
+                <input type="radio" name="gender" value="Male">
+                Male
+            </label>
+
+            <label class="flex items-center gap-2">
+                <input type="radio" name="gender" value="Female">
+                Female
+            </label>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-10 flex justify-center">
+
+    <button
+        type="submit"
+        class="px-10 py-3 rounded-xl
+               bg-white/10
+               border border-blue-400/30
+               backdrop-blur-md
+               text-white
+               font-bold
+               shadow-lg shadow-blue-500/20
+               hover:bg-blue-500/20
+               hover:border-blue-400/60
+               hover:scale-105
+               transition-all duration-300">
+
+        Create Account
+
+    </button>
+
+</div>
+```
+
+</form>
+
+
+
+
+</div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/output.css' %}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>View Blog</title>
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	<style>
+body {
+    background: linear-gradient(135deg, #000000, #0b1220, #1e3a8a, #7f1d1d);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+	</style>
+</head>
+<body class="min-h-screen text-white pt-24">
+<!-- NAVBAR -->
+<nav class="w-full fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 text-white">
+
+        <!-- Logo -->
+        <div class="font-bold text-xl text-green-400">
+            New Blogger
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-6 text-sm font-semibold">
+
+            <a href="{% url 'user_HomePage' %}" class="hover:text-green-400 transition">
+                Home
+            </a>
+
+            <a href="{% url 'AddBlog' %}" class="hover:text-yellow-400 transition">
+                Add Blog
+            </a>
+
+            <a href="{% url 'ViewBlog' %}" class="text-purple-400">
+                View Blog
+            </a>
+
+            <a href="{% url 'MyProfile' %}" class="hover:text-blue-400 transition">
+                Profile
+            </a>
+<a href="{% url 'Logout' %}"
+   class="hover:text-red-400 transition font-semibold">
+    Logout
+</a>
+        </div>
+        <button
+            id="menuBtn"
+            class="md:hidden text-3xl font-bold">
+
+            ☰
+
+        </button>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-black/70 backdrop-blur-lg border-t border-white/10">
+
+        <a href="{% url 'user_HomePage' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Home
+        </a>
+
+        <a href="{% url 'AddBlog' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Add Blog
+        </a>
+
+        <a href="{% url 'ViewBlog' %}"
+           class="block px-6 py-4 hover:bg-white/10 text-purple-300">
+            View Blog
+        </a>
+
+        <a href="{% url 'MyProfile' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Profile
+        </a>
+        <a href="{% url 'Logout' %}"
+   class="block px-6 py-4 hover:bg-red-500/20 text-red-300 font-semibold">
+    Logout
+</a>
+
+    </div>
+
+</nav>
+<div class="flex justify-center px-4">
+<div class="w-full max-w-6xl">
+    <div class="backdrop-blur-2xl bg-white/5border border-white/10 shadow-[0_0_60px_rgba(59,130,246,0.25)] rounded-3xl p-10 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-green-500/10 pointer-events-none"></div>
+        <div class="relative">
+            <h3 class="text-4xl font-black text-center mb-8 text-blue-300">
+                View Blogs
+           </h3>
+           <form method="GET" class="flex justify-center gap-3 mb-10">
+
+    <!-- Username Search -->
+    <input
+        type="text"
+        name="search"
+        placeholder="Search by username..."
+        value="{{ request.GET.search }}"
+        class="w-96 p-3 rounded-xl bg-black/30 border border-white/10 text-white outline-none focus:border-blue-400">
+
+    <!-- Search Button -->
+    <button
+        type="submit"
+        class="px-6 py-3 rounded-xl bg-blue-500/20 border border-blue-400/30 hover:bg-blue-500/30 hover:scale-105 transition">
+
+        Search
+
+    </button>
+
+   <div class="relative">
+
+<select
+    name="category"
+    onchange="this.form.submit()"
+    class="appearance-none
+           w-56
+           px-5 py-3
+           rounded-xl
+           bg-gradient-to-r from-yellow-500/15 to-orange-500/15
+           border border-yellow-400/40
+           text-yellow-200
+           font-semibold
+           backdrop-blur-lg
+           shadow-lg
+           shadow-yellow-500/10
+           cursor-pointer
+           hover:border-yellow-300
+           hover:shadow-yellow-400/20
+           focus:outline-none
+           focus:ring-2
+           focus:ring-yellow-400
+           transition-all duration-300">
+
+    <option value="" class="bg-slate-900 text-white">
+        📂 All Categories
+    </option>
+
+    {% for c in Category %}
+    <option
+        value="{{ c.id }}"
+        class="bg-slate-900 text-white"
+        {% if request.GET.category == c.id|stringformat:"s" %}
+            selected
+        {% endif %}>
+        {{ c.category_name }}
+    </option>
+    {% endfor %}
+
+</select>
+
+<!-- Arrow -->
+<div class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-yellow-300">
+    ▼
+</div>
+
+</div>
+</form>
+			<div class="space-y-6">
+				{% for u in blogs %}
+				<div class="bg-black/30 border border-white/10 rounded-2xl p-6 relative
+							hover:scale-[1.01] transition-all duration-300">
+					<div class="flex items-center gap-3 mb-4">
+<a href="{% if request.session.uid == u.user.id %}
+            {% url 'MyProfile' %}
+         {% else %}
+            {% url 'user_profile' u.user.id %}
+         {% endif %}"
+   class="flex items-center gap-3 mb-4 hover:opacity-80 transition">
+    {% if u.user.user_photo %}
+        <img src="{{ u.user.user_photo.url }}"
+             class="w-10 h-10 rounded-full object-cover border border-white/20">
+    {% else %}
+        <div class="w-10 h-10 rounded-full bg-gray-500"></div>
+   {% endif %}
+    <span class="text-white/80 font-semibold hover:text-blue-300 transition">
+        {{ u.user.user_name }}
+    </span>
+</a>
+					</div>
+					<h2 class="text-2xl font-bold text-white mb-2">
+						{{ u.blog_title }}
+					</h2>
+					<p class="text-white/70 mb-5">
+						{{ u.blog_content|striptags|truncatechars:150 }}
+					</p> 
+<div class="flex justify-between items-center mt-5">
+    <div class="flex items-center gap-4">
+        <a href="{% url 'BlogDetails' u.id %}"
+           class="px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-400/30 hover:bg-blue-500/30 transition">
+            View More
+        </a>
+        <span class="px-3 py-2 rounded-full
+                     bg-yellow-500/15
+                     border border-yellow-400/30
+                     text-yellow-300
+                     text-sm font-semibold">
+            📂 Category: {{ u.category.category_name }}
+       </span>
+   </div>
+   <div class="flex items-center gap-6">
+
+    <div class="flex items-center gap-2">
+        Views: 
+        <span>{{ u.blog_views }}</span>
+    </div>
+
+    <div class="flex items-center gap-2">
+        <a href="{% url 'like_blog' u.id %}"
+           class="px-3 py-1 rounded-full bg-red-500/20 border border-red-400/30 hover:bg-red-500/30 transition">
+            ❤️ Like
+        </a>
+
+        <span>
+            {{ u.tbl_blog_like_set.count }}
+        </span>
+    </div>
+
+</div>
+</div>
+    </div>
+				
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+</div> 
+<script>
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+});
+
+</script>
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/output.css' %}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Edit Profile</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+	<style>
+body {
+    background: linear-gradient(135deg, #000000, #0b1220, #1e3a8a, #7f1d1d);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+	</style>
+</head>
+
+<body class="min-h-screen text-white pt-28">
+<!-- NAVBAR -->
+<nav class="w-full fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 text-white">
+
+        <!-- Logo -->
+        <div class="font-bold text-xl text-green-400">
+            New Blogger
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-6 text-sm font-semibold">
+
+            <a href="{% url 'user_HomePage' %}" class="hover:text-green-400 transition">
+                Home
+            </a>
+
+            <a href="{% url 'AddBlog' %}" class="hover:text-yellow-400 transition">
+                Add Blog
+            </a>
+
+            <a href="{% url 'ViewBlog' %}" class="text-purple-400">
+                View Blog
+            </a>
+
+            <a href="{% url 'MyProfile' %}" class="hover:text-blue-400 transition">
+                Profile
+            </a>
+            <a href="{% url 'Logout' %}"
+   class="hover:text-red-400 transition font-semibold">
+    Logout
+</a>
+        </div>
+
+        <!-- Hamburger Button -->
+        <button
+            id="menuBtn"
+            class="md:hidden text-3xl font-bold">
+
+            ☰
+
+        </button>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-black/70 backdrop-blur-lg border-t border-white/10">
+
+        <a href="{% url 'user_HomePage' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Home
+        </a>
+
+        <a href="{% url 'AddBlog' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Add Blog
+        </a>
+
+        <a href="{% url 'ViewBlog' %}"
+           class="block px-6 py-4 hover:bg-white/10 text-purple-300">
+            View Blog
+        </a>
+
+        <a href="{% url 'MyProfile' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Profile
+        </a>
+<a href="{% url 'Logout' %}"
+   class="block px-6 py-4 hover:bg-red-500/20 text-red-300 font-semibold">
+    Logout
+</a>
+    </div>
+
+</nav>
+<div class="flex items-center justify-center px-4">
+
+	<div class="w-full max-w-2xl">
+
+		<div class="backdrop-blur-2xl bg-white/5 border border-white/10
+					shadow-[0_0_60px_rgba(59,130,246,0.25)]
+					rounded-3xl p-10 relative overflow-hidden">
+
+			<div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-green-500/10 pointer-events-none"></div>
+
+			<div class="relative text-center">
+
+				<h3 class="text-4xl font-black mb-2 text-blue-300">
+					Edit Profile
+				</h3>
+
+				<p class="text-white/60 mb-8">
+					Update your information below
+				</p>
+
+				<div class="space-y-4 text-left">
+
+					<input type="text" placeholder="Name"
+						class="w-full p-3 rounded-xl bg-black/30 border border-white/10">
+
+					<input type="email" placeholder="Email"
+						class="w-full p-3 rounded-xl bg-black/30 border border-white/10">
+
+					<input type="text" placeholder="Contact"
+						class="w-full p-3 rounded-xl bg-black/30 border border-white/10">
+
+					<input type="text" placeholder="Place"
+						class="w-full p-3 rounded-xl bg-black/30 border border-white/10">
+
+				</div>
+
+				<button class="mt-8 w-full py-3 rounded-xl
+							   bg-blue-500/20 border border-blue-400/30
+							   hover:bg-blue-500/30 hover:scale-105
+							   transition-all duration-300 font-semibold">
+
+					Update Profile
+
+				</button>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+<script>
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+});
+
+</script>
+</body>
+</html>

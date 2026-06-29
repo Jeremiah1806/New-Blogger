@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        body{
+            background-size:400% 400%;
+            animation:gradient 12s ease infinite;
+        }
+
+        @keyframes gradient{
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-blue-950 to-red-950 pt-24">
+
+<!-- NAVBAR -->
+<nav class="w-full fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 text-white">
+
+        <div class="font-bold text-xl text-blue-300">
+            Admin Panel
+        </div>
+
+        <div class="flex gap-6 text-sm font-semibold">
+
+            <a href="{% url 'homepage' %}" class="hover:text-green-400 transition">
+                Home
+            </a>
+
+            <a href="{% url 'adminregistration' %}" class="hover:text-yellow-400 transition">
+                Admins
+            </a>
+
+            <a href="{% url 'Category' %}" class="hover:text-purple-400 transition">
+                Category
+            </a>
+
+            <a href="{% url 'user_verification' %}" class="hover:text-red-400 transition">
+                Users
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
+<!-- PAGE CONTENT -->
+<div class="w-full max-w-6xl p-10 rounded-3xl
+            backdrop-blur-xl
+            bg-black/40
+            border border-blue-500/20
+            shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+
+    <h3 class="text-5xl font-black text-white text-center mb-2">
+        Admin Registration
+    </h3>
+
+    <p class="text-center text-blue-300/80 mb-8">
+        Manage administrator accounts
+    </p>
+
+    <!-- FORM -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+            <div>
+                <label class="block text-blue-200 mb-2 font-medium">
+                    Admin Name
+                </label>
+                <input type="text" name="admin_name"
+                       placeholder="Enter your name"
+                       class="w-full p-4 rounded-xl bg-black/40 border border-blue-500/30 text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-blue-200 mb-2 font-medium">
+                    Email
+                </label>
+                <input type="email" name="admin_email"
+                       placeholder="Enter email"
+                       class="w-full p-4 rounded-xl bg-black/40 border border-blue-500/30 text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-blue-200 mb-2 font-medium">
+                    Password
+                </label>
+                <input type="password" name="admin_password"
+                       placeholder="Enter password"
+                       class="w-full p-4 rounded-xl bg-black/40 border border-red-500/30 text-white focus:ring-2 focus:ring-red-500 outline-none">
+            </div>
+
+        </div>
+
+        <div class="mt-8 flex justify-center">
+
+            <button type="submit"
+                    class="px-10 py-3 rounded-xl
+                           bg-white/10 border border-blue-400/30
+                           text-white font-bold
+                           hover:bg-blue-500/20 hover:scale-105
+                           transition-all duration-300">
+
+                Save
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- TABLE -->
+    <div class="mt-12 overflow-x-auto">
+
+        <table class="w-full text-center border-collapse">
+
+            <thead>
+                <tr class="bg-white/10 text-blue-200">
+                    <th class="p-4 border border-blue-500/20">SI.No</th>
+                    <th class="p-4 border border-blue-500/20">Admin Name</th>
+                    <th class="p-4 border border-blue-500/20">Email</th>
+                    <th class="p-4 border border-blue-500/20">Password</th>
+                    <th class="p-4 border border-blue-500/20">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for a in AdminRegistration %}
+                <tr class="text-white hover:bg-white/5 transition">
+
+                    <td class="p-4 border border-blue-500/10">
+                        {{ forloop.counter }}
+                    </td>
+
+                    <td class="p-4 border border-blue-500/10">
+                        {{ a.admin_name }}
+                    </td>
+
+                    <td class="p-4 border border-blue-500/10">
+                        {{ a.admin_email }}
+                    </td>
+
+                    <td class="p-4 border border-blue-500/10">
+                        {{ a.admin_password }}
+                    </td>
+
+                    <td class="p-4 border border-blue-500/10">
+
+                        <form method="POST"
+                              action="{% url 'delete_admin_registration' a.id %}">
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="px-4 py-2 rounded-xl
+                                           bg-red-500/20 border border-red-400/30
+                                           text-red-300 font-semibold
+                                           hover:bg-red-500/30 hover:text-white
+                                           transition-all">
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

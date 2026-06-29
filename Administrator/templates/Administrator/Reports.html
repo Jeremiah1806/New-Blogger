@@ -1,0 +1,372 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Home Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+```
+<style>
+    body{
+        background-size:400% 400%;
+        animation:gradient 12s ease infinite;
+    }
+
+    @keyframes gradient{
+        0%{background-position:0% 50%;}
+        50%{background-position:100% 50%;}
+        100%{background-position:0% 50%;}
+    }
+</style>
+```
+
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-blue-950 to-red-950">
+<nav class="w-full fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+
+        <div class="font-bold text-xl text-blue-300">
+            Admin Panel
+        </div>
+        <div class="hidden md:flex gap-6 text-sm font-semibold">
+
+            <a href="{% url 'homepage' %}" class="text-green-200 hover:text-green-400 transition">Home</a>
+
+            <a href="{% url 'adminregistration' %}" class="text-yellow-200 hover:text-yellow-400 transition">Admins</a>
+
+            <a href="{% url 'Category' %}" class="text-purple-200 hover:text-purple-400 transition">Category</a>
+
+            <a href="{% url 'user_verification' %}" class="text-blue-200 hover:text-blue-400 transition">Users</a>
+
+            <a href="{% url 'admin_logout' %}" class="text-red-200 hover:text-red-400 font-bold transition">
+                Logout
+            </a>
+
+        </div>
+
+        <!-- Hamburger -->
+        <button id="menuBtn" class="md:hidden text-white text-3xl">
+            ☰
+        </button>
+
+    </div>
+        <div id="mobileMenu"
+     class="hidden md:hidden bg-black/80 backdrop-blur-lg border-t border-white/10 text-white">
+
+    <a href="{% url 'homepage' %}"
+       class="block px-6 py-4 text-green-200 hover:bg-white/10 hover:text-green-400">
+        Home
+    </a>
+
+    <a href="{% url 'adminregistration' %}"
+       class="block px-6 py-4 text-yellow-200 hover:bg-white/10 hover:text-yellow-400">
+        Admins
+    </a>
+
+    <a href="{% url 'Category' %}"
+       class="block px-6 py-4 text-purple-200 hover:bg-white/10 hover:text-purple-400">
+        Category
+    </a>
+
+    <a href="{% url 'user_verification' %}"
+       class="block px-6 py-4 text-blue-200 hover:bg-white/10 hover:text-blue-400">
+        Users
+    </a>
+
+    <a href="{% url 'admin_logout' %}"
+       class="block px-6 py-4 text-red-200 hover:bg-red-400/20">
+        Logout
+    </a>
+
+</div>
+</nav>
+
+```
+```
+<div class="w-full max-w-7xl mx-auto mt-28 mb-10">
+
+    <div class="p-10 rounded-3xl
+                backdrop-blur-xl
+                bg-black/40
+                border border-blue-500/20
+                shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+
+        <h1 class="text-5xl font-black text-center text-white mb-10">
+            Reports
+        </h1>
+        <form method="GET" class="flex flex-wrap justify-center gap-6 mb-10">
+
+            <div>
+                <label class="block text-blue-300 mb-2 font-semibold">
+                    From Date
+                </label>
+
+                <input
+                    type="date"
+                    name="from_date"
+                    value="{{ from_date }}"
+                    class="px-4 py-2 rounded-lg bg-black/30 border border-blue-500/30 text-white">
+            </div>
+
+            <div>
+                <label class="block text-blue-300 mb-2 font-semibold">
+                    To Date
+                </label>
+
+                <input
+                    type="date"
+                    name="to_date"
+                    value="{{ to_date }}"
+                    class="px-4 py-2 rounded-lg bg-black/30 border border-blue-500/30 text-white">
+            </div>
+
+            <div class="flex items-end">
+
+                <button
+                    class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition">
+
+                    Generate Report
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-green-300 mb-5">
+                Registered Users Report
+            </h2>
+            <table class="w-full text-center border border-green-500/20">
+                <thead>
+                <tr class="text-white bg-green-500/20">
+                    <th class="p-3">SI.No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Joined On</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                <tr class="text-green-200 border-t border-green-500/20">
+                    <td class="p-3">{{ forloop.counter }}</td>
+                    <td>{{ user.user_name }}</td>
+                    <td>{{ user.user_email }}</td>
+                    <td>{{ user.joined_date|date:"d-M-Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="p-5">
+                        No Users Found
+                   </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-right mt-3 font-bold text-green-300">
+                Total Registered Users :
+                {{ total_users }}
+            </div>
+        </div>
+        <!-- BLOGS -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-300 mb-5">
+                Blogs Created
+            </h2>
+            <table class="w-full text-center border border-blue-500/20">
+                <thead>
+                <tr class="text-white bg-blue-500/20">
+                    <th class="p-3">SI.No</th>
+                    <th>Blog Title</th>
+                    <th>Author</th>
+                    <th>Posted On</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for blog in blogs %}
+                <tr class="text-blue-200 border-t border-blue-500/20">
+                    <td class="p-3">{{ forloop.counter }}</td>
+                    <td>{{ blog.blog_title }}</td>
+                    <td>{{ blog.user.user_name }}</td>
+                    <td>{{ blog.blog_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="p-5">
+                       No Blogs Found
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+           <div class="text-right mt-3 font-bold text-blue-300">
+                Total Blogs :
+               {{ total_blogs }}
+            </div>
+        </div>
+
+        <!-- TOP ACTIVE USERS -->
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-purple-300 mb-5">
+                    Top 3 Active Users
+                </h2>
+                <table class="w-full text-center border border-purple-500/20">
+                    <thead>
+                    <tr class="text-white bg-purple-500/20">
+                        <th class = 'p-3'>Rank</th>
+                        <th>Name</th>
+                    <th>Total Blogs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in active_users %}
+                    <tr class="text-purple-200 border-t border-purple-500/20">
+                        <td class = 'p-3'>{{ forloop.counter }}</td>
+                        <td>{{ user.user_name }}</td>
+                        <td>{{ user.blog_count }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        <!-- TOP BLOGS -->
+
+        <div class="mb-12">
+
+            <h2 class="text-3xl font-bold text-red-300 mb-5">
+
+                Top 3 Most Liked Blogs
+
+            </h2>
+
+            <table class="w-full text-center border border-red-500/20">
+
+                <thead>
+
+                <tr class="text-white bg-red-500/20">
+
+                    <th class="p-3">Rank</th>
+
+                    <th>Blog</th>
+
+                    <th>Author</th>
+
+                    <th>Likes</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for blog in top_blogs %}
+
+                <tr class="text-red-200 border-t border-red-500/20">
+
+                    <td class="p-3">{{ forloop.counter }}</td>
+
+                    <td>{{ blog.blog_title }}</td>
+
+                    <td>{{ blog.user.user_name }}</td>
+
+                    <td>❤️ {{ blog.total_likes }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- SUMMARY -->
+
+        <div class="rounded-2xl p-8 bg-black/30 border border-yellow-500/20">
+
+            <h2 class="text-3xl text-gray-500 font-bold mb-6">
+
+                Report Summary
+
+            </h2>
+
+            <div class="text-gray-500 space-y-3 text-xl">
+
+                <p>
+                    Registered Users :
+                    <span class="font-bold">{{ total_users }}</span>
+                </p>
+
+                <p>
+                    Blogs Created :
+                    <span class="font-bold">{{ total_blogs }}</span>
+                </p>
+
+                <p>
+
+                    Most Active User :
+
+                    {% if active_users %}
+
+                        {{ active_users.0.user_name }}
+
+                        ({{ active_users.0.blog_count }} Blogs)
+
+                    {% else %}
+
+                        -
+
+                    {% endif %}
+
+                </p>
+
+                <p>
+
+                    Most Liked Blog :
+
+                    {% if top_blogs %}
+
+                        {{ top_blogs.0.blog_title }}
+
+                        ({{ top_blogs.0.total_likes }} Likes)
+
+                    {% else %}
+
+                        -
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", function () {
+            mobileMenu.classList.toggle("hidden");
+        });
+    }
+});
+</script>
+</body>
+</html>

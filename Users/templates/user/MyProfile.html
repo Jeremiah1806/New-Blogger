@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+<head>
+	<link rel="stylesheet" href="{% static 'css/output.css' %}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Profile</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+	<style>
+body {
+    background: linear-gradient(135deg, #000000, #0b1220, #1e3a8a, #7f1d1d);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+	</style>
+</head>
+
+<body class="min-h-screen text-white">
+<!-- NAVBAR -->
+<nav class="w-full fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 text-white">
+
+        <!-- Logo -->
+        <div class="font-bold text-xl text-green-400">
+            New Blogger
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-6 text-sm font-semibold">
+
+            <a href="{% url 'user_HomePage' %}" class="hover:text-green-400 transition">
+                Home
+            </a>
+
+            <a href="{% url 'AddBlog' %}" class="hover:text-yellow-400 transition">
+                Add Blog
+            </a>
+
+            <a href="{% url 'ViewBlog' %}" class="text-purple-400">
+                View Blog
+            </a>
+
+            <a href="{% url 'MyProfile' %}" class="hover:text-blue-400 transition">
+                Profile
+            </a>
+<a href="{% url 'Logout' %}"
+   class="hover:text-red-400 transition font-semibold">
+    Logout
+</a>
+        </div>
+
+        <!-- Hamburger Button -->
+        <button
+            id="menuBtn"
+            class="md:hidden text-3xl font-bold">
+
+            ☰
+
+        </button>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-black/70 backdrop-blur-lg border-t border-white/10">
+
+        <a href="{% url 'user_HomePage' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Home
+        </a>
+
+        <a href="{% url 'AddBlog' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Add Blog
+        </a>
+
+        <a href="{% url 'ViewBlog' %}"
+           class="block px-6 py-4 hover:bg-white/10 text-purple-300">
+            View Blog
+        </a>
+
+        <a href="{% url 'MyProfile' %}"
+           class="block px-6 py-4 hover:bg-white/10">
+            Profile
+        </a>
+        <a href="{% url 'Logout' %}"
+   class="block px-6 py-4 hover:bg-red-500/20 text-red-300 font-semibold">
+    Logout
+</a>
+    </div>
+
+</nav>
+<div class="pt-28 px-4 flex justify-center">
+
+	<div class="w-full max-w-4xl">
+
+		<div class="backdrop-blur-2xl bg-white/5 border border-white/10
+					shadow-[0_0_60px_rgba(34,197,94,0.25)]
+					rounded-3xl p-10 relative overflow-hidden">
+
+			<div class="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-blue-500/10 pointer-events-none"></div>
+
+			<div class="relative">
+
+				<h1 class="text-4xl font-black text-center mb-2">
+					My Profile
+				</h1>
+
+				<p class="text-center text-green-300/70 mb-10">
+					View your account information
+				</p>
+
+				<div class="flex flex-col items-center">
+
+					<div class="mb-8">
+						{% if data.user_photo %}
+							<img src="{{ data.user_photo.url }}"
+								 class="w-36 h-36 object-cover rounded-full
+										border-4 border-green-400/30
+										shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+						{% else %}
+							<img src="{% static 'images/profile.jpg' %}"
+								 class="w-36 h-36 object-cover rounded-full
+										border-4 border-green-400/30
+										shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+						{% endif %}
+					</div>
+
+					<div class="w-full max-w-2xl">
+
+						<table class="w-full text-left border-separate border-spacing-y-3">
+
+							<tr class="bg-black/30">
+								<td class="p-3 font-semibold text-green-300">Name</td>
+								<td class="p-3">{{ data.user_name }}</td>
+							</tr>
+
+							<tr class="bg-black/30">
+								<td class="p-3 font-semibold text-green-300">Email</td>
+								<td class="p-3">{{ data.user_email }}</td>
+							</tr>
+
+							<tr class="bg-black/30">
+								<td class="p-3 font-semibold text-green-300">Contact</td>
+								<td class="p-3">{{ data.user_contact }}</td>
+							</tr>
+
+							<tr class="bg-black/30">
+								<td class="p-3 font-semibold text-green-300">Place</td>
+								<td class="p-3">{{ data.user_place }}</td>
+							</tr>
+
+							<tr class="bg-black/30">
+								<td class="p-3 font-semibold text-green-300">Gender</td>
+								<td class="p-3">{{ data.user_gender }}</td>
+							</tr>
+
+							<tr class="bg-black/30">
+								<td class="p-3 font-semibold text-green-300">Date of Birth</td>
+								<td class="p-3">{{ data.user_dateofbirth }}</td>
+							</tr>
+
+						</table>
+
+					</div>
+
+				</div>
+				<!-- EDIT PROFILE BUTTON -->
+<div class="mt-8 text-center">
+<!-- ACTION BUTTONS -->
+<!-- ACTION BUTTONS -->
+<div class="mt-8 flex justify-center gap-4">
+
+    <!-- EDIT PROFILE -->
+    <a href="{% url 'EditProfile' %}"
+       class="px-6 py-3 rounded-xl bg-blue-500/20 border border-blue-400/40
+              text-blue-200 font-semibold
+              hover:bg-blue-500/30 hover:scale-105
+              transition-all duration-300 inline-block">
+        Edit Profile
+    </a>
+
+    <!-- VIEW MY BLOGS -->
+    <a href="{% url 'user_blog_list' data.id %}"
+       class="px-6 py-3 rounded-xl bg-purple-500/20 border border-purple-400/40
+              text-purple-200 font-semibold
+              hover:bg-purple-500/30 hover:scale-105
+              transition-all duration-300 inline-block">
+        View My Blogs
+    </a>
+
+    <!-- CHANGE PASSWORD -->
+    <a href="{% url 'ChangePassword' %}"
+       class="px-6 py-3 rounded-xl bg-red-500/20 border border-red-400/40
+              text-red-200 font-semibold
+              hover:bg-red-500/30 hover:scale-105
+              transition-all duration-300 inline-block">
+        Change Password
+    </a>
+
+</div>
+</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+<script>
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+});
+
+</script>
+</body>
+</html>
