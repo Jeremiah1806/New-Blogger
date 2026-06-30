@@ -25,7 +25,7 @@ def login(request):
 
         return render(request, "Guest/Login.html", {"msg": "Invalid credentials"})
 
-    return render(request, "Guest/Login.html")
+    return render(request, "guest/Login.html")
 
 def delete_user(request, id):
     user = get_object_or_404(tbl_user, id=id)
