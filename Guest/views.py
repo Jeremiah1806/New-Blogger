@@ -32,9 +32,6 @@ def delete_user(request, id):
     user.delete()
     return redirect("user_registration")
 
-def userregistration(requests):
-    return render(requests, "Guest/UserRegistration.html")
-
 def userregistration(request):
 
     if request.method == "POST":
