@@ -16,15 +16,14 @@ def userregistration(requests):
 
 def login_view(request):
     if request.method == "POST":
-        username = request.POST.get("email")
+        email = request.POST.get("email")
         password = request.POST.get("password")
 
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
+        try:
+            user = tbl_user.objects.get(user_email=email, user_password=password)
+            request.session["uid"] = user.id
             return redirect("/administrator/HomePage/")
-        else:
+        except:
             return render(request, "Guest/Login.html", {"msg": "Invalid credentials"})
 
     return render(request, "Guest/Login.html")
