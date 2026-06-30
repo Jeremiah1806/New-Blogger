@@ -59,7 +59,7 @@ def userregistration(request):
         )
 
 
-        return redirect("login")
+        return redirect("Login")
 
 
     return render(request,"Guest/UserRegistration.html")
