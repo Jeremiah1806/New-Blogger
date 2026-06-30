@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
@@ -85,15 +86,10 @@ WSGI_APPLICATION = 'NewBlogger.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "newblogger",
-        "USER": "newblogger_user",
-        "PASSWORD": "tVbvaZY5qqqZKfqil48ygn2sTcw2Moor",
-        "HOST": "dpg-d917nqmrnols73fagdt0-a",
-        "PORT": "5432",
-    }
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 
