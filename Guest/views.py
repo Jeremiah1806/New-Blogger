@@ -6,6 +6,27 @@ from Administrator.models import tbl_admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
+def login(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        admin = tbl_admin.objects.filter(admin_email=email, admin_password=password).first()
+        if admin:
+            request.session["uid"] = admin.id
+            request.session["name"] = admin.admin_name
+            return redirect("homepage")
+
+        user = tbl_user.objects.filter(user_email=email, user_password=password).first()
+        if user:
+            request.session["uid"] = user.id
+            request.session["name"] = user.user_name
+            return redirect("user_HomePage")
+
+        return render(request, "Guest/Login.html", {"msg": "Invalid credentials"})
+
+    return render(request, "Guest/Login.html")
+
 def delete_user(request, id):
     user = get_object_or_404(tbl_user, id=id)
     user.delete()
@@ -51,23 +72,3 @@ def delete_user(request, id):
     user.delete()
     return redirect("userregistration") 
 
-def login(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-        admin = tbl_admin.objects.filter(admin_email=email, admin_password=password).first()
-        if admin:
-            request.session["uid"] = admin.id
-            request.session["name"] = admin.admin_name
-            return redirect("homepage")
-
-        user = tbl_user.objects.filter(user_email=email, user_password=password).first()
-        if user:
-            request.session["uid"] = user.id
-            request.session["name"] = user.user_name
-            return redirect("user_HomePage")
-
-        return render(request, "Guest/Login.html", {"msg": "Invalid credentials"})
-
-    return render(request, "Guest/Login.html")
