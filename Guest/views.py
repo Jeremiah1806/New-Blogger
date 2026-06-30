@@ -68,6 +68,6 @@ def login(request):
             request.session["name"] = user.user_name
             return redirect("user_HomePage")
 
-        return render(request, "Guest/login.html", {"msg": "Invalid credentials"})
+        return render(request, "Guest/Login.html", {"msg": "Invalid credentials"})
 
-    return render(request, "Guest/login.html")
+    return render(request, "Guest/Login.html")
