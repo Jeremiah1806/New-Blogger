@@ -16,7 +16,7 @@ def userregistration(requests):
 
 def login_view(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        username = request.POST.get("email")
         password = request.POST.get("password")
 
         user = authenticate(request, username=username, password=password)
