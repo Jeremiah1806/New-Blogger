@@ -21,9 +21,13 @@ def login_view(request):
 
         try:
             user = tbl_user.objects.get(user_email=email, user_password=password)
+
             request.session["uid"] = user.id
+            request.session["uname"] = user.user_name
+
             return redirect("/administrator/HomePage/")
-        except:
+
+        except tbl_user.DoesNotExist:
             return render(request, "Guest/Login.html", {"msg": "Invalid credentials"})
 
     return render(request, "Guest/Login.html")
